@@ -42,7 +42,7 @@ public abstract class CraftingRecipe implements Recipe, Keyed {
     public boolean equals(Object object) {
         if(!(object instanceof CraftingRecipe)) return false;
 
-        CraftingRecipe that = (CraftingRecipe) object;
-        return that.getKey().equals(this.key) && that.getIngredients().equals(this.getIngredients()) && that.getResult().equals(this.result);
+        CraftingRecipe recipe = (CraftingRecipe) object;
+        return recipe.getKey().equals(this.key) && recipe.getIngredients().equals(this.getIngredients()) && recipe.getResult().equals(this.result);
     }
 }
