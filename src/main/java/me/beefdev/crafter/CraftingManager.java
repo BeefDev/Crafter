@@ -2,15 +2,9 @@ package me.beefdev.crafter;
 
 import com.google.common.base.Preconditions;
 import me.beefdev.crafter.recipes.CraftingRecipe;
-import me.beefdev.crafter.recipes.ShapedCraftingRecipe;
-import me.beefdev.crafter.recipes.ShapelessCraftingRecipe;
 import org.bukkit.Bukkit;
-import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,38 +40,8 @@ public final class CraftingManager {
         return this.RECIPES_RESULT_KEY.containsKey(result) ? new ArrayList<>(this.RECIPES_RESULT_KEY.get(result)) : Collections.emptyList();
     }
 
-    //TODO implement ShapedRecipe mapping
-    public ShapedCraftingRecipe asCraftingRecipe(ShapedRecipe recipe) {
-        return null;
-    }
-
-    public ShapelessCraftingRecipe asCraftingRecipe(ShapelessRecipe recipe) {
-        return new ShapelessCraftingRecipe(recipe.getKey().getKey(), recipe.getIngredientList(), recipe.getResult());
-    }
-
     public List<CraftingRecipe> getCustomCraftingRecipes() {
         return new ArrayList<>(this.RECIPES_NAME_SPACED_KEY.values());
-    }
-
-    public List<CraftingRecipe> getVanillaCraftingRecipes() {
-        List<CraftingRecipe> recipes = new ArrayList<>();
-        Iterator<Recipe> recipeIterator = Bukkit.recipeIterator();
-
-        while(recipeIterator.hasNext()) {
-            recipeIterator.forEachRemaining(recipe -> {
-                if(recipe instanceof Keyed) {
-                    if(!((Keyed)recipe).getKey().getNamespace().equals(NamespacedKey.MINECRAFT)) return;
-                }
-
-                if(recipe instanceof ShapedRecipe) {
-                    recipes.add(this.asCraftingRecipe((ShapedRecipe) recipe));
-                } else if(recipe instanceof ShapelessRecipe) {
-                    recipes.add(this.asCraftingRecipe((ShapelessRecipe) recipe));
-                }
-            });
-        }
-
-        return recipes;
     }
 
     public void registerRecipe(CraftingRecipe recipe) {

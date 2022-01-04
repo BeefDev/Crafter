@@ -1,7 +1,6 @@
 package me.beefdev.crafter.recipes;
 
 import com.google.common.base.Preconditions;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
