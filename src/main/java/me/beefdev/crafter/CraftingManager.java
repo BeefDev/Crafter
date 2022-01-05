@@ -4,75 +4,73 @@ import com.google.common.base.Preconditions;
 import me.beefdev.crafter.recipes.CraftingRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * Singleton class used for managing the api, instance can be obtained used Crafter.getCraftingManager()
+ */
 public final class CraftingManager {
 
-    private final Map<NamespacedKey, CraftingRecipe> RECIPES_NAME_SPACED_KEY;
-    private final Map<List<ItemStack>, CraftingRecipe> RECIPES_INGREDIENT_KEY;
-    private final Map<ItemStack, List<CraftingRecipe>> RECIPES_RESULT_KEY;
+    private final Map<NamespacedKey, CraftingRecipe> RECIPES;
 
     CraftingManager() {
-        this.RECIPES_NAME_SPACED_KEY = new HashMap<>();
-        this.RECIPES_INGREDIENT_KEY = new HashMap<>();
-        this.RECIPES_RESULT_KEY = new HashMap<>();
+        this.RECIPES = new HashMap<>();
     }
 
-    public CraftingRecipe getCraftingRecipe(NamespacedKey key) {
-        Preconditions.checkNotNull(key);
-
-        return this.RECIPES_NAME_SPACED_KEY.get(key);
+    /**
+     * @param key The key of the desired recipe
+     * @return The recipe corresponding to the provided key, or null if none are found
+     */
+    public CraftingRecipe getRegisteredRecipe(NamespacedKey key) {
+        Preconditions.checkNotNull(key, "Can't search using null key");
+        return this.RECIPES.get(key);
     }
 
-    public CraftingRecipe getCraftingRecipe(List<ItemStack> matrix) {
-        Preconditions.checkNotNull(matrix);
-
-        matrix = matrix.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        return this.RECIPES_INGREDIENT_KEY.get(matrix);
+    /**
+     * @return All custom registered recipes
+     */
+    public List<CraftingRecipe> getRegisteredRecipes() {
+        return new ArrayList<>(this.RECIPES.values());
     }
 
-    public List<CraftingRecipe> getCraftingRecipesFor(ItemStack result) {
-        Preconditions.checkNotNull(result);
-
-        return this.RECIPES_RESULT_KEY.containsKey(result) ? new ArrayList<>(this.RECIPES_RESULT_KEY.get(result)) : Collections.emptyList();
+    /**
+     * A method used to check if a recipe matching this key is registered
+     * @param key The key used to find the recipe
+     * @return TRUE if a recipe by that key exists otherwise FALSE
+     */
+    public boolean isRegistered(NamespacedKey key) {
+        Preconditions.checkNotNull(key, "Can't search using null key");
+        return this.RECIPES.containsKey(key);
     }
 
-    public List<CraftingRecipe> getCustomCraftingRecipes() {
-        return new ArrayList<>(this.RECIPES_NAME_SPACED_KEY.values());
-    }
-
+    /**
+     * Used for creating a new custom recipe
+     * @param recipe The recipe being created
+     */
     public void registerRecipe(CraftingRecipe recipe) {
-        Preconditions.checkNotNull(recipe);
+        Preconditions.checkNotNull(recipe, "Can't register null recipe");
         Preconditions.checkArgument(Bukkit.getRecipe(recipe.getKey()) == null, "Duplicate keys, a recipe already exists with the key " + recipe.getKey());
 
-        this.RECIPES_NAME_SPACED_KEY.put(recipe.getKey(), recipe);
-        this.RECIPES_INGREDIENT_KEY.put(recipe.getIngredients(), recipe);
-
-        List<CraftingRecipe> recipesForResult = this.RECIPES_RESULT_KEY.getOrDefault(recipe.getResult(), new ArrayList<>());
-        recipesForResult.add(recipe);
-
-        this.RECIPES_RESULT_KEY.put(recipe.getResult(), recipesForResult);
-
+        this.RECIPES.put(recipe.getKey(), recipe);
         Bukkit.addRecipe(recipe.toBukkit());
     }
 
+    /**
+     * Used to delete a recipe
+     * @param key The key used by the desired recipe
+     */
     public void unregisterRecipe(NamespacedKey key) {
-        Preconditions.checkNotNull(key);
+        Preconditions.checkNotNull(key, "Can't search using null key");
 
-        CraftingRecipe recipe = this.RECIPES_NAME_SPACED_KEY.get(key);
+        CraftingRecipe recipe = this.RECIPES.get(key);
         if(recipe == null) return;
 
-        this.RECIPES_RESULT_KEY.get(recipe.getResult()).remove(recipe);
-        this.RECIPES_INGREDIENT_KEY.remove(recipe.getIngredients());
-        this.RECIPES_NAME_SPACED_KEY.remove(recipe.getKey());
+        this.RECIPES.remove(recipe.getKey());
 
         Bukkit.removeRecipe(key);
-    }
-
-    public boolean isRegistered(NamespacedKey key) {
-        return this.RECIPES_NAME_SPACED_KEY.containsKey(key);
     }
 }

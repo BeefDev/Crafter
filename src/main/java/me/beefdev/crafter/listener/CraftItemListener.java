@@ -1,6 +1,7 @@
 package me.beefdev.crafter.listener;
 
 import me.beefdev.crafter.Crafter;
+import me.beefdev.crafter.recipes.ingredients.Ingredient;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -20,7 +21,7 @@ public final class CraftItemListener implements Listener {
 
             if(!Crafter.getCraftingManager().isRegistered(recipe.getKey())) return;
 
-            List<ItemStack> actualIngredients = Crafter.getCraftingManager().getCraftingRecipe(recipe.getKey()).getIngredients();
+            List<Ingredient> actualIngredients = Crafter.getCraftingManager().getRegisteredRecipe(recipe.getKey()).getIngredients();
             List<ItemStack> providedIngredients = Arrays.asList(event.getInventory().getMatrix());
 
             if(event.getClick().isShiftClick()) {
@@ -54,7 +55,7 @@ public final class CraftItemListener implements Listener {
                     if(actualIngredients.get(index) != null) {
                         if(event.getInventory().getMatrix()[index] == null) {
                             ItemStack[] matrix = event.getInventory().getMatrix().clone();
-                            ItemStack item = actualIngredients.get(index);
+                            ItemStack item = providedIngredients.get(index);
                             item.setAmount(1);
                             matrix[index] = item;
                             event.getInventory().setMatrix(matrix);

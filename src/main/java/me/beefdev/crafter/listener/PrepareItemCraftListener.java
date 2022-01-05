@@ -1,6 +1,7 @@
 package me.beefdev.crafter.listener;
 
 import me.beefdev.crafter.Crafter;
+import me.beefdev.crafter.recipes.ingredients.Ingredient;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -21,12 +22,12 @@ public final class PrepareItemCraftListener implements Listener {
 
             if(!Crafter.getCraftingManager().isRegistered(recipe.getKey())) return;
 
-            List<ItemStack> actualIngredients = Crafter.getCraftingManager().getCraftingRecipe(recipe.getKey()).getIngredients();
+            List<Ingredient> actualIngredients = Crafter.getCraftingManager().getRegisteredRecipe(recipe.getKey()).getIngredients();
             List<ItemStack> providedIngredients = Arrays.asList(event.getInventory().getMatrix());
 
             for(int index = 0; index < providedIngredients.size(); index++) {
                 if(providedIngredients.get(index) == null && actualIngredients.get(index) == null) continue;
-                if((providedIngredients.get(index) == null || actualIngredients.get(index) == null) || (!providedIngredients.get(index).isSimilar(actualIngredients.get(index))) || (providedIngredients.get(index).getAmount() < actualIngredients.get(index).getAmount())) {
+                if((providedIngredients.get(index) == null || actualIngredients.get(index) == null) || (!actualIngredients.get(index).matches(providedIngredients.get(index))) || (providedIngredients.get(index).getAmount() < actualIngredients.get(index).getAmount())) {
                     event.getInventory().setResult(null);
                     return;
                 }
@@ -36,20 +37,19 @@ public final class PrepareItemCraftListener implements Listener {
 
             if(!Crafter.getCraftingManager().isRegistered(recipe.getKey())) return;
 
-            List<ItemStack> actualIngredients = Crafter.getCraftingManager().getCraftingRecipe(recipe.getKey()).getIngredients();
+            List<Ingredient> actualIngredients = Crafter.getCraftingManager().getRegisteredRecipe(recipe.getKey()).getIngredients();
             ItemStack[] providedIngredients = event.getInventory().getMatrix();
 
             for (ItemStack providedIngredient : providedIngredients) {
                 if (providedIngredient == null) continue;
 
-                Optional<ItemStack> match = actualIngredients.stream().filter(ingredient -> ingredient.isSimilar(providedIngredient) && providedIngredient.getAmount() >= ingredient.getAmount()).findFirst();
+                Optional<Ingredient> match = actualIngredients.stream().filter(ingredient -> ingredient.matches(providedIngredient) && providedIngredient.getAmount() >= ingredient.getAmount()).findFirst();
                 if (!match.isPresent()) {
                     event.getInventory().setResult(null);
                     return;
                 }
 
-                ItemStack ingredient = match.get();
-                actualIngredients.remove(ingredient);
+                actualIngredients.remove(match.get());
             }
         }
     }
