@@ -29,7 +29,7 @@ CraftingRecipe recipe = new ShapelessCraftingRecipe("enchanted-stone", ingredien
         
 Crafter.getCraftingManager().registerRecipe(recipe);
 ```
-#API Usage
+# API Usage
 You can easily import our api using maven, just copy the jitpack.io repository and the Crafter dependency inside your pom.xml
 ```xml
 <repository>
