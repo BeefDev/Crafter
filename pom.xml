@@ -7,6 +7,11 @@
     <groupId>me.beefdev</groupId>
     <artifactId>Crafter</artifactId>
     <version>1.0</version>
+
+    <name>Crafter</name>
+    <description>An easy to use crafting API for spigot that allows developers to quickly make custom recipes without having to handle crafting events themselves or deal with bukkit's crafting API.</description>
+    <url>https://github.com/TheBeefDev/Crafter</url>
+
     <properties>
         <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
