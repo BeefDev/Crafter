@@ -6,11 +6,44 @@
 
     <groupId>me.beefdev</groupId>
     <artifactId>Crafter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <packaging>jar</packaging>
+
+    <name>Crafter</name>
+    <description>An easy to use crafting API for spigot that allows developers to quickly make custom recipes without having to handle crafting events themselves or deal with bukkit's crafting API.</description>
+    <url>https://github.com/TheBeefDev/Crafter</url>
+
+    <licenses>
+        <license>
+            <name>The Unlicense</name>
+            <url>https://unlicense.org/</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>BeefDev</name>
+            <email>developer.beef@gmail.com</email>
+            <organization>me.beefdev</organization>
+            <organizationUrl>https://github.com/TheBeefDev/</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <java.version>8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>
@@ -24,9 +57,8 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>

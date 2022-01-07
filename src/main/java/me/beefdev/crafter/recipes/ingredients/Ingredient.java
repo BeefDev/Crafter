@@ -3,8 +3,6 @@ package me.beefdev.crafter.recipes.ingredients;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-
 /**
  * An interface used for handling ingredients in crafting recipes
  */
@@ -15,7 +13,7 @@ public interface Ingredient {
      * @param item The item being compared to this ingredient, the item is never null
      * @return returns whether the item matches this ingredient, if any ingredients return false the recipe is not fulfilled and the item is not crafted
      * */
-    boolean matches(@Nonnull ItemStack item);
+    boolean matches(ItemStack item);
 
     /**
      * @return A positive Integer representing the minimum amount of this ingredient in order to fulfill the recipe

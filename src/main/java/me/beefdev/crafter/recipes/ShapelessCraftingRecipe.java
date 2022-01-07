@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * An implementation of CraftingRecipe class dedicated to ShapelessRecipes. Any CraftingRecipe subclass dedicated to the handling of ShapelessRecipes should implement its methods in the same way as this class for the recipe to be handled correctly
  */
-public final class ShapelessCraftingRecipe extends CraftingRecipe {
+public class ShapelessCraftingRecipe extends CraftingRecipe {
 
     private final List<Ingredient> ingredients;
 

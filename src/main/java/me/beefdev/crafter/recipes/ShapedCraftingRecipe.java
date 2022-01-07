@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * An implementation of CraftingRecipe class dedicated to ShapedRecipes. Any CraftingRecipe subclass dedicated to the handling of ShapedRecipes should implement its methods in the same way as this class for the recipe to be handled correctly
  */
-public final class ShapedCraftingRecipe extends CraftingRecipe {
+public class ShapedCraftingRecipe extends CraftingRecipe {
 
     private final List<Ingredient> ingredients;
 
