@@ -42,6 +42,6 @@ You can easily import our api using maven, just copy the jitpack.io repository a
 <dependency>
     <groupId>com.github.TheBeefDev</groupId>
     <artifactId>Crafter</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
