@@ -22,7 +22,7 @@ public interface Ingredient {
 
     /**
      * A utility method needed for the registration of CraftingRecipes
-     * @return The material this Ingredient is suppossed to represent in the crafting grid
+     * @return The material this Ingredient is supposed to represent in the crafting grid
      */
     Material toMaterial();
 }

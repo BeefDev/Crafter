@@ -2,6 +2,7 @@ package me.beefdev.crafter;
 
 import com.google.common.base.Preconditions;
 import me.beefdev.crafter.recipes.CraftingRecipe;
+import me.beefdev.crafter.util.BukkitRecipeMethods;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 
@@ -53,7 +54,7 @@ public final class CraftingManager {
      */
     public void registerRecipe(CraftingRecipe recipe) {
         Preconditions.checkNotNull(recipe, "Can't register null recipe");
-        Preconditions.checkArgument(Bukkit.getRecipe(recipe.getKey()) == null, "Duplicate keys, a recipe already exists with the key " + recipe.getKey());
+        Preconditions.checkArgument(BukkitRecipeMethods.getRecipe(recipe.getKey()) == null, "Duplicate keys, a recipe already exists with the key " + recipe.getKey());
 
         this.RECIPES.put(recipe.getKey(), recipe);
         Bukkit.addRecipe(recipe.toBukkit());
@@ -71,6 +72,6 @@ public final class CraftingManager {
 
         this.RECIPES.remove(recipe.getKey());
 
-        Bukkit.removeRecipe(key);
+        BukkitRecipeMethods.removeRecipe(key);
     }
 }
