@@ -3,6 +3,7 @@ package me.beefdev.crafter;
 import com.google.common.base.Preconditions;
 import me.beefdev.crafter.listener.CraftItemListener;
 import me.beefdev.crafter.listener.PrepareItemCraftListener;
+import me.beefdev.crafter.listener.RecipeDiscoveryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -25,6 +26,7 @@ public final class Crafter {
 
         Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), plugin);
         Bukkit.getPluginManager().registerEvents(new CraftItemListener(), plugin);
+        Bukkit.getPluginManager().registerEvents(new RecipeDiscoveryListener(), plugin);
     }
 
     /**
