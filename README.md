@@ -7,7 +7,7 @@ Shaped recipes:
 ```
 Ingredient materialIngredient = new IngredientMaterial(Material.NETHERITE_INGOT);
 
-List<Ingredient> ingredients = List.of(
+List<Ingredient> ingredients = Arrays.asList(
     materialIngredient,materialIngredient,materialIngredient,
     materialIngredient,null,materialIngredient,
     null,null,null
